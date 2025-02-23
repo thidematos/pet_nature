@@ -7,13 +7,24 @@ class Input extends StatelessWidget {
   const Input({
     required this.placeholder,
     required this.label,
+    this.validator,
+    this.useAutoCapitalization = false,
+    this.keyToSave = '',
+    this.onSave,
+    this.controller,
     this.useObscure = false,
+
     super.key,
   });
 
   final String placeholder;
   final String label;
   final bool useObscure;
+  final bool useAutoCapitalization;
+  final Function(String? value)? validator;
+  final Function(String key, String value)? onSave;
+  final String keyToSave;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +43,18 @@ class Input extends StatelessWidget {
             boxShadow: [UiInstances.shadow],
           ),
           child: TextFormField(
+            controller: controller,
+            onSaved:
+                (value) => {if (onSave != null) onSave!(keyToSave, value!)},
+            validator: (value) {
+              if (validator == null) return null;
+
+              return validator!(value);
+            },
+            textCapitalization:
+                useAutoCapitalization
+                    ? TextCapitalization.sentences
+                    : TextCapitalization.none,
             obscureText: useObscure,
             decoration: InputDecoration(
               hintText: placeholder,

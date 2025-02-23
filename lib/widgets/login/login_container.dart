@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_nature/screens/signup_screen.dart';
-import 'package:pet_nature/themes/color_theme.dart';
-import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:pet_nature/widgets/ui/text_cta.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
@@ -18,6 +15,15 @@ class LoginContainer extends StatefulWidget {
 
 class _LoginContainerState extends State<LoginContainer> {
   bool useObscure = true;
+  final TextEditingController passwordController = TextEditingController(
+    text: '',
+  );
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
 
   void toggleVisibility() {
     setState(() {
@@ -39,7 +45,7 @@ class _LoginContainerState extends State<LoginContainer> {
             spacing: 16,
             children: [
               Input(placeholder: 'toninho@asimov.com', label: 'Email'),
-              InputPassword(),
+              InputPassword(controller: passwordController),
               SizedBox(height: 24),
               Button('Entrar', () {}),
               TextCta('Não possui conta?', 'Cadastrar', () {

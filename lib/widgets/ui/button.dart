@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
+import 'package:pet_nature/widgets/ui/loader.dart';
 
 class Button extends StatelessWidget {
-  const Button(this.text, this.handler, {this.isLight = false, super.key});
+  const Button(
+    this.text,
+    this.handler, {
+    this.isLight = false,
+    this.isLoading = false,
+    super.key,
+  });
 
   final String text;
   final void Function() handler;
   final bool isLight;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +35,22 @@ class Button extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 44),
       child: Center(
         child: InkWell(
-          onTap: handler,
-          child: Text(
-            text,
-            style: LetterTheme.button.copyWith(
-              color: isLight ? ColorTheme.secondaryTwo : ColorTheme.light,
-            ),
-          ),
+          splashColor: ColorTheme.primary,
+          enableFeedback: !isLoading,
+          onTap: () {
+            if (isLoading) return;
+            handler();
+          },
+          child:
+              isLoading
+                  ? Loader()
+                  : Text(
+                    text,
+                    style: LetterTheme.button.copyWith(
+                      color:
+                          isLight ? ColorTheme.secondaryTwo : ColorTheme.light,
+                    ),
+                  ),
         ),
       ),
     );
