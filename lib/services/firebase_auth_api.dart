@@ -22,4 +22,21 @@ class FirebaseAuthApi {
       return null;
     }
   }
+
+  static Future login(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
+    try {
+      final loggedUser = await _instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return loggedUser;
+    } on FirebaseAuthException catch (err) {
+      UiInstances.showSnackbar(context, 'Usuário ou senha incorretos!');
+      return null;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_nature/screens/loading_scren.dart';
 import 'package:pet_nature/screens/start_screen.dart';
 import 'package:pet_nature/themes/geral_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
