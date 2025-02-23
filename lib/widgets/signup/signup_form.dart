@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/signup_provider.dart';
 import 'package:pet_nature/screens/login_screen.dart';
 import 'package:pet_nature/services/firebase_auth_api.dart';
+import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
@@ -69,11 +70,19 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       userData['password']!,
     );
 
-    toggleLoader(state: false);
-
     if (user == null) {
-      resetPasswords();
+      toggleLoader(state: false);
+      return resetPasswords();
     }
+
+    final createdUser = await FirebaseFirestoreApi.createUser(context, {
+      'name': userData['name']!,
+      'email': userData['email']!,
+      'code': uniqueCode,
+      'uid': user.uid,
+    });
+
+    toggleLoader(state: false);
 
     ref.read(SignupProvider.notifier).reset();
   }

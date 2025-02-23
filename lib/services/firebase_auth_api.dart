@@ -16,7 +16,7 @@ class FirebaseAuthApi {
         password: password,
       );
 
-      return createdUser;
+      return createdUser.user;
     } on FirebaseAuthException catch (err) {
       UiInstances.showSnackbar(context, err.message ?? 'Algo deu errado!');
       return null;

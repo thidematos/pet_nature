@@ -15,7 +15,7 @@ class SignupNotifier extends StateNotifier<Map<String, String>> {
   SignupNotifier() : super({});
 
   String generateCode() {
-    final String code = uuid.v4().substring(0, 7);
+    final String code = uuid.v4().substring(0, 7).toUpperCase();
 
     return code;
   }

@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^5.5.0
   flutter_riverpod: ^2.6.1
   uuid: ^4.5.1
+  cloud_firestore: ^5.6.4
 
 flutter_native_splash:
   #color: "#42a5f5"
