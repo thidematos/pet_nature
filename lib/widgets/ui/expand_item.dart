@@ -23,10 +23,23 @@ class _ExpandItemState extends State<ExpandItem> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> content = [
+      ListTile(
+        title: Text(
+          'Não há produtos dessa categoria!',
+          style: LetterTheme.textSemibold,
+        ),
+      ),
+    ];
+
+    if (widget.items.isNotEmpty) {
+      content = [for (final item in widget.items) ProductItem(item)];
+    }
+
     return ExpansionTile(
       tilePadding: EdgeInsets.only(left: 8),
       title: Text(widget.title, style: LetterTheme.secondaryTitle),
-      children: [for (final item in widget.items) ProductItem(item)],
+      children: content,
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
-import 'package:pet_nature/widgets/ui/button.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem(this.title, {super.key});

@@ -27,4 +27,15 @@ class FirebaseFirestoreApi {
       return null;
     }
   }
+
+  static getProdutos() async {
+    try {
+      final produtos = await _instance.collection('produtos').get();
+
+      return produtos.docs.map((produto) => produto.data()).toList();
+    } on FirebaseException catch (err) {
+      //UiInstances.showSnackbar(context, err.message!);
+      return err;
+    }
+  }
 }
