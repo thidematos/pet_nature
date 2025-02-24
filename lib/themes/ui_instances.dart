@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
+import 'package:pet_nature/widgets/ui/logo.dart';
 
 class UiInstances {
   const UiInstances();
@@ -15,6 +16,22 @@ class UiInstances {
   static EdgeInsets screenPadding = const EdgeInsets.symmetric(
     vertical: 50,
     horizontal: 20,
+  );
+
+  static AppBar appBar = AppBar(
+    actionsPadding: EdgeInsets.symmetric(horizontal: 20),
+    backgroundColor: ColorTheme.light,
+    centerTitle: true,
+    title: Logo(),
+    actions: [
+      Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: ColorTheme.primaryOne, width: 1),
+          shape: BoxShape.circle,
+        ),
+        child: CircleAvatar(backgroundColor: ColorTheme.primary),
+      ),
+    ],
   );
 
   static showSnackbar(BuildContext context, String text) {

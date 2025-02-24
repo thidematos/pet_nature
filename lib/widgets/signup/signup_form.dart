@@ -85,6 +85,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     toggleLoader(state: false);
 
     ref.read(SignupProvider.notifier).reset();
+
+    Navigator.of(context).pop();
   }
 
   @override

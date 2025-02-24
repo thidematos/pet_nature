@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_nature/screens/login_screen.dart';
 import 'package:pet_nature/screens/signup_screen.dart';
@@ -23,8 +24,12 @@ class StartScreen extends StatelessWidget {
             Column(
               spacing: 22,
               children: [
-                Button('Fazer login', () {
-                  Navigator.of(context).pushReplacement(
+                Button('Fazer login', () async {
+                  /* await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: 'thigas@petnature.com',
+                    password: '123456',
+                  ); */
+                  Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 }),

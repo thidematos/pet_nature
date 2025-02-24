@@ -47,19 +47,21 @@ class _LoginContainerState extends State<LoginContainer> {
       isLoading = true;
     });
 
-    final loggedUser = await FirebaseAuthApi.login(
+    final user = await FirebaseAuthApi.login(
       context,
       emailController.text,
       passwordController.text,
     );
 
-    if (loggedUser == null) {
-      passwordController.clear();
-    }
+    passwordController.clear();
 
     setState(() {
       isLoading = false;
     });
+
+    if (user != null) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -85,9 +87,9 @@ class _LoginContainerState extends State<LoginContainer> {
               SizedBox(height: 24),
               Button('Entrar', login, isLoading: isLoading),
               TextCta('Não possui conta?', 'Cadastrar', () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (context) => SignupScreen()));
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignupScreen()),
+                );
               }),
             ],
           ),

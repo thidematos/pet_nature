@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 
-final _instance = FirebaseAuth.instance;
-
 class FirebaseAuthApi {
   static Future createUser(
     BuildContext context,
@@ -11,10 +9,8 @@ class FirebaseAuthApi {
     String password,
   ) async {
     try {
-      final createdUser = await _instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final createdUser = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       return createdUser.user;
     } on FirebaseAuthException catch (err) {
@@ -29,11 +25,12 @@ class FirebaseAuthApi {
     String password,
   ) async {
     try {
-      final loggedUser = await _instance.signInWithEmailAndPassword(
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return loggedUser;
+
+      return user;
     } on FirebaseAuthException catch (err) {
       UiInstances.showSnackbar(context, 'Usuário ou senha incorretos!');
       return null;

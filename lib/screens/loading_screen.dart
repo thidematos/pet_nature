@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/widgets/ui/loader.dart';
 
-class LoadingScren extends StatelessWidget {
-  const LoadingScren({super.key});
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

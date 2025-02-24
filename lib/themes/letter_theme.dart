@@ -23,7 +23,11 @@ class LetterTheme {
     color: ColorTheme.secondaryTwo,
   );
 
-  static TextStyle secondaryTitle = GoogleFonts.sourceSans3(fontSize: 18);
+  static TextStyle secondaryTitle = GoogleFonts.sourceSans3(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: ColorTheme.darker,
+  );
 
   static TextStyle button = GoogleFonts.sourceSans3(
     fontSize: 16,
