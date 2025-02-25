@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:pet_nature/widgets/ui/logo.dart';
+import 'package:pet_nature/widgets/ui/user_avatar.dart';
 
 class UiInstances {
   const UiInstances();
@@ -40,7 +41,7 @@ class UiInstances {
           onTap: () {
             FirebaseAuth.instance.signOut();
           },
-          child: CircleAvatar(backgroundColor: ColorTheme.primary),
+          child: UserAvatar(),
         ),
       ),
     ],

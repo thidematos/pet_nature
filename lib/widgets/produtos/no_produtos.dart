@@ -9,7 +9,7 @@ class NoProdutos extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Text(
-        'Não há produtos com esse nome!',
+        'Não há produtos!',
         style: LetterTheme.secondaryTitle.copyWith(color: ColorTheme.danger),
       ),
     );

@@ -20,6 +20,7 @@ class FirebaseFirestoreApi {
             'email': userData['email'],
             'uid': userData['uid'],
             'created_at': DateTime.now().millisecondsSinceEpoch,
+            'photo': userData['photo'],
           });
 
       return createdUser;

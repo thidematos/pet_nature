@@ -45,6 +45,7 @@ dependencies:
   diacritic: ^0.1.6
   firebase_storage: ^12.4.3
   image_picker: ^1.1.2
+  transparent_image: ^2.0.1
 
 flutter_native_splash:
   #color: "#42a5f5"

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_nature/providers/global_data.dart';
-import 'package:pet_nature/widgets/ui/expand_item.dart';
+import 'package:pet_nature/widgets/produtos/expand_item.dart';
 
 class ExpandList extends StatelessWidget {
   const ExpandList(this.produtos, {super.key});

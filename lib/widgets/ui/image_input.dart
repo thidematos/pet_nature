@@ -5,10 +5,16 @@ import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
-  const ImageInput(this.pickedImage, this.setImageFile, {super.key});
+  const ImageInput(
+    this.pickedImage,
+    this.setImageFile, {
+    this.useCamera = true,
+    super.key,
+  });
 
   final File? pickedImage;
   final Function(File image) setImageFile;
+  final bool useCamera;
 
   @override
   State<ImageInput> createState() => _ImageInputState();
@@ -17,7 +23,7 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   void pickImage() async {
     final image = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: widget.useCamera ? ImageSource.camera : ImageSource.gallery,
       imageQuality: 50,
       maxWidth: 150,
     );

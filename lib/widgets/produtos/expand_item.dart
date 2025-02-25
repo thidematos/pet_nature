@@ -23,9 +23,9 @@ class ExpandItem extends ConsumerWidget {
     }
 
     if (appRoles.estoquista.name == role || appRoles.admin.name == role) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => EditProdutoScreen()));
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => EditProdutoScreen(curProduto)),
+      );
     }
   }
 

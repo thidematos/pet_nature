@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/global_data.dart';
 import 'package:pet_nature/providers/produtos_provider.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
+import 'package:pet_nature/services/firebase_storage_api.dart';
+import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/dropdown.dart';
+import 'package:pet_nature/widgets/ui/image_input.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
 
 class NewProdutoForm extends ConsumerStatefulWidget {
@@ -22,6 +27,7 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
   final TextEditingController descriptionController = TextEditingController(
     text: '',
   );
+  File? pickedImage;
 
   bool isLoading = false;
 
@@ -30,6 +36,12 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
   void onSelectCategory(String value) {
     setState(() {
       selectedCategory = value;
+    });
+  }
+
+  void onPickImage(File image) {
+    setState(() {
+      pickedImage = image;
     });
   }
 
@@ -44,9 +56,23 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
 
     if (!isValidate) return;
 
+    if (pickedImage == null) {
+      UiInstances.showSnackbar(context, 'Adicione uma foto do produto!');
+      return;
+    }
+
     final String now = DateTime.now().millisecondsSinceEpoch.toString();
 
     final String uid = kUuid.v4();
+
+    setState(() {
+      isLoading = true;
+    });
+
+    final imageUrl = await FirebaseStorageApi.uploadProdutoImage(
+      pickedImage!,
+      uid,
+    );
 
     final produtoData = {
       'name': nameController.text,
@@ -55,15 +81,12 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
       'brand': brandController.text,
       'created_at': now,
       'uid': uid,
+      'image': imageUrl,
       'last_edition': {
         'timestamp': now,
         'user': FirebaseAuth.instance.currentUser!.uid,
       },
     };
-
-    setState(() {
-      isLoading = true;
-    });
 
     final isOkay = await FirebaseFirestoreApi.createProduto(
       context,
@@ -95,6 +118,7 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
       child: Column(
         spacing: 16,
         children: [
+          ImageInput(pickedImage, onPickImage, useCamera: false),
           Input(
             useAutoCapitalization: true,
             placeholder: 'Ração cachorro 20kg grande porte Lester',

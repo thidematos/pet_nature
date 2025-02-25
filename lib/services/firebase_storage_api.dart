@@ -17,4 +17,17 @@ class FirebaseStorageApi {
 
     return photoUrl;
   }
+
+  static uploadProdutoImage(File image, String produtoUid) async {
+    final storageRef = _instance
+        .ref()
+        .child('produto_photo')
+        .child('$produtoUid.jpg');
+
+    await storageRef.putFile(image);
+
+    final iamgeUrl = await storageRef.getDownloadURL();
+
+    return iamgeUrl;
+  }
 }

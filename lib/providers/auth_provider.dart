@@ -13,6 +13,11 @@ class userNotifier extends StateNotifier<Map> {
 
     return role;
   }
+
+  String get photoUrl {
+    final url = state['photo'];
+    return url;
+  }
 }
 
 final UserProvider = StateNotifierProvider<userNotifier, Map>(

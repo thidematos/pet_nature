@@ -41,57 +41,67 @@ class _ProdutoDetailsModalState extends State<ProdutoDetailsModal> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = SingleChildScrollView(
-      child: Column(
-        spacing: 24,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            widget.produto['name'],
-            style: LetterTheme.secondaryTitle.copyWith(
-              color: ColorTheme.secondaryTwo,
-            ),
-          ),
-          DetailRow('Tipo:', kProdutosCategories[widget.produto['category']]!),
-          DetailRow('Marca:', widget.produto['brand']),
-          DetailRow(
-            'Data de cadastro:',
-            kFormatTimestamp(widget.produto['created_at']),
-          ),
-          DetailRow(
-            'Última edição:',
-            kFormatTimestamp(widget.produto['last_edition']['timestamp']),
-          ),
-          DetailRow('Usuário que editou:', user!['code']),
-          DetailRow(
-            'Descrição:',
-            (widget.produto['description'] as String).isEmpty
-                ? 'Sem descrição'
-                : widget.produto['description'],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Fechar',
-                  style: LetterTheme.secondaryTitle.copyWith(
-                    color: ColorTheme.danger,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    Widget? content;
 
     if (isLoading) {
-      content = Center(
-        child: CircularProgressIndicator(color: ColorTheme.secondaryTwo),
+      content = FractionallySizedBox(
+        heightFactor: 0.6,
+        child: Center(
+          child: CircularProgressIndicator(color: ColorTheme.secondaryTwo),
+        ),
+      );
+    }
+
+    if (!isLoading) {
+      content = SingleChildScrollView(
+        child: Column(
+          spacing: 24,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.produto['name'],
+              style: LetterTheme.secondaryTitle.copyWith(
+                color: ColorTheme.secondaryTwo,
+              ),
+            ),
+            DetailRow(
+              'Tipo:',
+              kProdutosCategories[widget.produto['category']]!,
+            ),
+            DetailRow('Marca:', widget.produto['brand']),
+            DetailRow(
+              'Data de cadastro:',
+              kFormatTimestamp(widget.produto['created_at']),
+            ),
+            DetailRow(
+              'Última edição:',
+              kFormatTimestamp(widget.produto['last_edition']['timestamp']),
+            ),
+            DetailRow('Usuário que editou:', user!['code']),
+            DetailRow(
+              'Descrição:',
+              (widget.produto['description'] as String).isEmpty
+                  ? 'Sem descrição'
+                  : widget.produto['description'],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Fechar',
+                    style: LetterTheme.secondaryTitle.copyWith(
+                      color: ColorTheme.danger,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     }
 

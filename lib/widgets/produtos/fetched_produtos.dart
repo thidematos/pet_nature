@@ -5,7 +5,7 @@ import 'package:pet_nature/providers/auth_provider.dart';
 import 'package:pet_nature/screens/new_produto_screen.dart';
 import 'package:pet_nature/widgets/produtos/expand_list.dart';
 import 'package:pet_nature/widgets/produtos/no_produtos.dart';
-import 'package:pet_nature/widgets/ui/Search.dart';
+import 'package:pet_nature/widgets/ui/search.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 
 class FetchedProdutos extends ConsumerStatefulWidget {
