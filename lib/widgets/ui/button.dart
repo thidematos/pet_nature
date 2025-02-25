@@ -32,7 +32,7 @@ class Button extends StatelessWidget {
                 : null,
       ),
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 44),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Center(
         child: InkWell(
           splashColor: ColorTheme.primary,
@@ -46,6 +46,7 @@ class Button extends StatelessWidget {
                   ? Loader()
                   : Text(
                     text,
+                    textAlign: TextAlign.center,
                     style: LetterTheme.button.copyWith(
                       color:
                           isLight ? ColorTheme.secondaryTwo : ColorTheme.light,

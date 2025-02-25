@@ -2,14 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/produtos_provider.dart';
-import 'package:pet_nature/screens/new_produto.dart';
-import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
-import 'package:pet_nature/widgets/produtos/expand_list.dart';
 import 'package:pet_nature/widgets/produtos/fetched_produtos.dart';
-import 'package:pet_nature/widgets/ui/Search.dart';
-import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/page_title.dart';
 
 class ProdutosScreen extends ConsumerWidget {

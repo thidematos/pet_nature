@@ -13,10 +13,11 @@ class Input extends StatelessWidget {
     this.onSave,
     this.controller,
     this.useObscure = false,
-
+    this.minLines,
     super.key,
   });
 
+  final int? minLines;
   final String placeholder;
   final String label;
   final bool useObscure;

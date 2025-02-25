@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_nature/providers/produtos_provider.dart';
+import 'package:pet_nature/providers/global_data.dart';
 import 'package:pet_nature/widgets/ui/expand_item.dart';
-
-final Map<String, String> kProdutosTypes = {
-  'alimentos-umidos': 'Alimentos úmidos (latas e sachês)',
-  'camas-almofadas': 'Camas e almofadas',
-  'coleiras-guias': 'Coleiras e guias',
-  'escovas-pentes': 'Escovas e pentes',
-  'racao': 'Ração',
-  'shampoo-cond': 'Shampoo e condicionadores',
-};
 
 class ExpandList extends StatelessWidget {
   const ExpandList(this.produtos, {super.key});
 
   final List produtos;
 
-  List getTypeProdutos(String type) {
-    return produtos.where((produto) => produto['type'] == type).toList();
+  List getCategoryProdutos(String category) {
+    return produtos
+        .where((produto) => produto['category'] == category)
+        .toList();
   }
 
   @override
@@ -26,11 +18,13 @@ class ExpandList extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          for (final type in kProdutosTypes.keys)
-            if (getTypeProdutos(type).isNotEmpty)
+          for (final category in kProdutosCategories.keys)
+            if (getCategoryProdutos(category).isNotEmpty)
               ExpandItem(
-                items: [for (final item in getTypeProdutos(type)) item['name']],
-                title: kProdutosTypes[type]!,
+                produtos: [
+                  for (final produto in getCategoryProdutos(category)) produto,
+                ],
+                title: kProdutosCategories[category]!,
               ),
         ],
       ),

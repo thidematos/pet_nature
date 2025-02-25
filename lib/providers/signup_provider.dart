@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
+import 'package:pet_nature/providers/global_data.dart';
 
 final formInitialValues = {
   'name': '',
@@ -9,13 +9,11 @@ final formInitialValues = {
   'code': '',
 };
 
-final uuid = Uuid();
-
 class SignupNotifier extends StateNotifier<Map<String, String>> {
   SignupNotifier() : super({});
 
   String generateCode() {
-    final String code = uuid.v4().substring(0, 7).toUpperCase();
+    final String code = kUuid.v4().substring(0, 7).toUpperCase();
 
     return code;
   }

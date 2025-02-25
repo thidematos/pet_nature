@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'package:pet_nature/providers/global_data.dart';
+import 'package:pet_nature/services/firebase_firestore_api.dart';
+import 'package:pet_nature/themes/color_theme.dart';
+import 'package:pet_nature/themes/letter_theme.dart';
+import 'package:pet_nature/widgets/produtos/detail_row.dart';
+import 'package:pet_nature/widgets/ui/button.dart';
+
+class ProdutoDetailsModal extends StatefulWidget {
+  const ProdutoDetailsModal(this.produto, {super.key});
+
+  final Map produto;
+
+  @override
+  State<ProdutoDetailsModal> createState() => _ProdutoDetailsModalState();
+}
+
+class _ProdutoDetailsModalState extends State<ProdutoDetailsModal> {
+  bool isLoading = false;
+  Map? user;
+
+  void getLastEditionUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    user = await FirebaseFirestoreApi.getUser(
+      widget.produto['last_edition']['user'],
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getLastEditionUser();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget content = SingleChildScrollView(
+      child: Column(
+        spacing: 24,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            widget.produto['name'],
+            style: LetterTheme.secondaryTitle.copyWith(
+              color: ColorTheme.secondaryTwo,
+            ),
+          ),
+          DetailRow('Tipo:', kProdutosCategories[widget.produto['category']]!),
+          DetailRow('Marca:', widget.produto['brand']),
+          DetailRow(
+            'Data de cadastro:',
+            kFormatTimestamp(widget.produto['created_at']),
+          ),
+          DetailRow(
+            'Última edição:',
+            kFormatTimestamp(widget.produto['last_edition']['timestamp']),
+          ),
+          DetailRow('Usuário que editou:', user!['code']),
+          DetailRow(
+            'Descrição:',
+            (widget.produto['description'] as String).isEmpty
+                ? 'Sem descrição'
+                : widget.produto['description'],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Fechar',
+                  style: LetterTheme.secondaryTitle.copyWith(
+                    color: ColorTheme.danger,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    if (isLoading) {
+      content = Center(
+        child: CircularProgressIndicator(color: ColorTheme.secondaryTwo),
+      );
+    }
+
+    return Dialog(
+      backgroundColor: ColorTheme.light,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 16),
+        child: content,
+      ),
+    );
+  }
+}

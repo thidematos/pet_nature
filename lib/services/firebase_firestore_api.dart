@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 
@@ -26,6 +27,37 @@ class FirebaseFirestoreApi {
       UiInstances.showSnackbar(context, err.message!);
       return null;
     }
+  }
+
+  static getUser(String userUid) async {
+    try {
+      final user = await _instance.collection('users').doc(userUid).get();
+
+      return user.data();
+    } on FirebaseException catch (err) {
+      return err;
+    }
+  }
+
+  static createProduto(context, produto) async {
+    try {
+      await _instance.collection('produtos').doc(produto['uid']).set(produto);
+
+      return true;
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, err.message!);
+      return false;
+    }
+  }
+
+  static verifyUser() async {
+    final user =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+
+    return user.data();
   }
 
   static getProdutos() async {

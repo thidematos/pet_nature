@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
@@ -18,6 +19,12 @@ class UiInstances {
     horizontal: 20,
   );
 
+  static EdgeInsets screenPaddingWithAppBar = const EdgeInsets.only(
+    left: 20,
+    right: 20,
+    bottom: 50,
+  );
+
   static AppBar appBar = AppBar(
     actionsPadding: EdgeInsets.symmetric(horizontal: 20),
     backgroundColor: ColorTheme.light,
@@ -29,7 +36,12 @@ class UiInstances {
           border: Border.all(color: ColorTheme.primaryOne, width: 1),
           shape: BoxShape.circle,
         ),
-        child: CircleAvatar(backgroundColor: ColorTheme.primary),
+        child: InkWell(
+          onTap: () {
+            FirebaseAuth.instance.signOut();
+          },
+          child: CircleAvatar(backgroundColor: ColorTheme.primary),
+        ),
       ),
     ],
   );

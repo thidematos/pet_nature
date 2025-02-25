@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/signup_provider.dart';
 import 'package:pet_nature/screens/login_screen.dart';
 import 'package:pet_nature/services/firebase_auth_api.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
+import 'package:pet_nature/services/firebase_storage_api.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
+import 'package:pet_nature/widgets/ui/image_input.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
 import 'package:pet_nature/widgets/ui/input_password.dart';
 import 'package:pet_nature/widgets/ui/page_title.dart';
@@ -24,6 +28,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   final passwordController = TextEditingController(text: '');
   final passwordConfirmationController = TextEditingController(text: '');
 
+  File? pickedImageFile;
+
   bool isLoading = false;
 
   @override
@@ -31,6 +37,12 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     passwordController.dispose();
     passwordConfirmationController.dispose();
     super.dispose();
+  }
+
+  void setImageFile(File image) {
+    setState(() {
+      pickedImageFile = image;
+    });
   }
 
   resetPasswords() {
@@ -60,6 +72,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       return;
     }
 
+    if (pickedImageFile == null) {
+      UiInstances.showSnackbar(context, 'Adicione uma foto de perfil!');
+      return;
+    }
+
     final String uniqueCode = ref.read(SignupProvider.notifier).generateCode();
 
     toggleLoader(state: true);
@@ -75,11 +92,17 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       return resetPasswords();
     }
 
+    final photoUrl = await FirebaseStorageApi.uploadUserPhoto(
+      pickedImageFile!,
+      user.uid,
+    );
+
     final createdUser = await FirebaseFirestoreApi.createUser(context, {
       'name': userData['name']!,
       'email': userData['email']!,
       'code': uniqueCode,
       'uid': user.uid,
+      'photo': photoUrl,
     });
 
     toggleLoader(state: false);
@@ -100,6 +123,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             'Criar conta',
             subtitle: 'Insira suas informações pessoais abaixo',
           ),
+          ImageInput(pickedImageFile, setImageFile),
           Input(
             placeholder: 'Toninho Asimov',
             label: 'Nome completo',
