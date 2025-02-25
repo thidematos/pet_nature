@@ -37,4 +37,25 @@ class FirebaseAuthApi {
       return null;
     }
   }
+
+  static validatePassword(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+
+      final credentials = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+
+      await user.reauthenticateWithCredential(credentials);
+
+      return true;
+    } on FirebaseAuthException catch (err) {
+      return false;
+    }
+  }
 }

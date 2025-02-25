@@ -8,10 +8,16 @@ class ImageInput extends StatefulWidget {
   const ImageInput(
     this.pickedImage,
     this.setImageFile, {
+    this.radius = 40,
+    this.useLastImage,
     this.useCamera = true,
+    this.label = 'Adicionar foto',
     super.key,
   });
 
+  final String label;
+  final double radius;
+  final String? useLastImage;
   final File? pickedImage;
   final Function(File image) setImageFile;
   final bool useCamera;
@@ -38,16 +44,18 @@ class _ImageInputState extends State<ImageInput> {
     return Column(
       children: [
         CircleAvatar(
-          radius: 40,
+          radius: widget.radius,
           backgroundColor: ColorTheme.primary,
           foregroundImage:
               widget.pickedImage != null
                   ? FileImage(widget.pickedImage!)
-                  : null,
+                  : widget.useLastImage == null
+                  ? null
+                  : NetworkImage(widget.useLastImage!),
         ),
         TextButton.icon(
           onPressed: pickImage,
-          label: Text('Adicionar foto', style: LetterTheme.secondaryTitle),
+          label: Text(widget.label, style: LetterTheme.secondaryTitle),
           icon: Icon(Icons.image),
         ),
       ],

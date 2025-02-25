@@ -18,6 +18,25 @@ class FirebaseStorageApi {
     return photoUrl;
   }
 
+  static updateProdutoImage(File image, String produtoUid) async {
+    final storageRef = _instance
+        .ref()
+        .child('produto_photo')
+        .child('$produtoUid.jpg');
+
+    await storageRef.delete();
+
+    final newStorageRef = _instance
+        .ref()
+        .child('produto_photo')
+        .child('$produtoUid.jpg');
+
+    await newStorageRef.putFile(image);
+    final imageUrl = await storageRef.getDownloadURL();
+
+    return imageUrl;
+  }
+
   static uploadProdutoImage(File image, String produtoUid) async {
     final storageRef = _instance
         .ref()
@@ -26,8 +45,8 @@ class FirebaseStorageApi {
 
     await storageRef.putFile(image);
 
-    final iamgeUrl = await storageRef.getDownloadURL();
+    final imageUrl = await storageRef.getDownloadURL();
 
-    return iamgeUrl;
+    return imageUrl;
   }
 }

@@ -17,7 +17,7 @@ class ImageDisplayer extends StatelessWidget {
         boxShadow: [UiInstances.shadow],
       ),
       child: FadeInImage(
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         width: 125,
         height: 125,
         placeholder: MemoryImage(kTransparentImage),

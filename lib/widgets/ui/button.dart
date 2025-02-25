@@ -9,12 +9,14 @@ class Button extends StatelessWidget {
     this.text,
     this.handler, {
     this.isLight = false,
+    this.isDanger = false,
     this.isLoading = false,
     super.key,
   });
 
   final String text;
   final void Function() handler;
+  final bool isDanger;
   final bool isLight;
   final bool isLoading;
 
@@ -23,7 +25,12 @@ class Button extends StatelessWidget {
     return Container(
       height: 45,
       decoration: BoxDecoration(
-        color: isLight ? ColorTheme.light : ColorTheme.secondaryTwo,
+        color:
+            isLight
+                ? ColorTheme.light
+                : isDanger
+                ? ColorTheme.danger
+                : ColorTheme.secondaryTwo,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [UiInstances.shadow],
         border:

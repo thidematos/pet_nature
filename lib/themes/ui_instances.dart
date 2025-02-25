@@ -29,8 +29,11 @@ class UiInstances {
   static AppBar appBar = AppBar(
     actionsPadding: EdgeInsets.symmetric(horizontal: 20),
     backgroundColor: ColorTheme.light,
+    surfaceTintColor: ColorTheme.light,
+    toolbarHeight: 75,
     centerTitle: true,
-    title: Logo(),
+
+    title: Padding(padding: const EdgeInsets.only(bottom: 8), child: Logo()),
     actions: [
       Container(
         decoration: BoxDecoration(
@@ -45,6 +48,11 @@ class UiInstances {
         ),
       ),
     ],
+  );
+
+  static EdgeInsets modalPadding = EdgeInsets.symmetric(
+    vertical: 28,
+    horizontal: 16,
   );
 
   static showSnackbar(BuildContext context, String text) {

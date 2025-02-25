@@ -3,8 +3,10 @@ import 'package:pet_nature/providers/global_data.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/letter_theme.dart';
+import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/produtos/detail_row.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
+import 'package:pet_nature/widgets/ui/image_displayer.dart';
 
 class ProdutoDetailsModal extends StatefulWidget {
   const ProdutoDetailsModal(this.produto, {super.key});
@@ -58,6 +60,7 @@ class _ProdutoDetailsModalState extends State<ProdutoDetailsModal> {
           spacing: 24,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            ImageDisplayer(widget.produto['image']),
             Text(
               widget.produto['name'],
               style: LetterTheme.secondaryTitle.copyWith(
@@ -107,10 +110,7 @@ class _ProdutoDetailsModalState extends State<ProdutoDetailsModal> {
 
     return Dialog(
       backgroundColor: ColorTheme.light,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 16),
-        child: content,
-      ),
+      child: Padding(padding: UiInstances.modalPadding, child: content),
     );
   }
 }

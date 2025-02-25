@@ -40,13 +40,38 @@ class FirebaseFirestoreApi {
     }
   }
 
-  static createProduto(context, produto) async {
+  static createProduto(BuildContext context, produto) async {
     try {
       await _instance.collection('produtos').doc(produto['uid']).set(produto);
 
       return true;
     } on FirebaseException catch (err) {
       UiInstances.showSnackbar(context, err.message!);
+      return false;
+    }
+  }
+
+  static updateProduto(
+    BuildContext context,
+    updateData,
+    String produtoUid,
+  ) async {
+    try {
+      await _instance.collection('produtos').doc(produtoUid).update(updateData);
+
+      return true;
+    } on FirebaseAuthException catch (err) {
+      UiInstances.showSnackbar(context, err.message!);
+      return false;
+    }
+  }
+
+  static deleteProduto(BuildContext context, String produtoUid) async {
+    try {
+      await _instance.collection('produtos').doc(produtoUid).delete();
+      return true;
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, 'Algo deu errado.');
       return false;
     }
   }
