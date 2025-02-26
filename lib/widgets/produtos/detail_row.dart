@@ -13,13 +13,19 @@ class DetailRow extends StatelessWidget {
     return Row(
       spacing: 8,
       children: [
-        Text(
-          label,
-          style: LetterTheme.textSemibold.copyWith(
-            color: ColorTheme.secondaryTwo,
+        Expanded(
+          child: Text(
+            label,
+            softWrap: true,
+            style: LetterTheme.textSemibold.copyWith(
+              color: ColorTheme.secondaryTwo,
+            ),
           ),
         ),
-        Text(content, style: LetterTheme.textSemibold),
+        Expanded(
+          child: SingleChildScrollView(
+              child: Text(content, style: LetterTheme.textSemibold)),
+        ),
       ],
     );
   }

@@ -14,6 +14,7 @@ class Input extends StatelessWidget {
     this.controller,
     this.useObscure = false,
     this.minLines,
+    this.keyboardType,
     super.key,
   });
 
@@ -22,6 +23,7 @@ class Input extends StatelessWidget {
   final String label;
   final bool useObscure;
   final bool useAutoCapitalization;
+  final TextInputType? keyboardType;
   final Function(String? value)? validator;
   final Function(String key, String value)? onSave;
   final String keyToSave;
