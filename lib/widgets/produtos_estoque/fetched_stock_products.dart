@@ -5,19 +5,20 @@ import 'package:pet_nature/providers/auth_provider.dart';
 import 'package:pet_nature/screens/new_stock_product_screen.dart';
 import 'package:pet_nature/widgets/produtos/expand_list.dart';
 import 'package:pet_nature/widgets/produtos/no_produtos.dart';
+import 'package:pet_nature/widgets/produtos_estoque/expand_stock_list.dart';
 import 'package:pet_nature/widgets/ui/search.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 
-class FetchedStockProdutos extends ConsumerStatefulWidget {
-  const FetchedStockProdutos(this.produtosstock, {super.key});
+class FetchedStockProducts extends ConsumerStatefulWidget {
+  const FetchedStockProducts(this.produtosstock, {super.key});
 
   final List produtosstock;
 
   @override
-  ConsumerState<FetchedStockProdutos> createState() => _FetchedProdutosState();
+  ConsumerState<FetchedStockProducts> createState() => _FetchedStockProdutosState();
 }
 
-class _FetchedProdutosState extends ConsumerState<FetchedStockProdutos> {
+class _FetchedStockProdutosState extends ConsumerState<FetchedStockProducts> {
   String query = '';
 
   void onQuery(String value) {
@@ -53,7 +54,7 @@ class _FetchedProdutosState extends ConsumerState<FetchedStockProdutos> {
           SizedBox(height: 20),
           if (filteredProdutos.isEmpty) NoProdutos(),
           if (filteredProdutos.isNotEmpty)
-            Expanded(child: ExpandList(filteredProdutos)),
+            Expanded(child: ExpandStockList(filteredProdutos)),
           if (role == 'admin' || role == 'estoquista')
             Button('Novo produto', () {
               Navigator.push(

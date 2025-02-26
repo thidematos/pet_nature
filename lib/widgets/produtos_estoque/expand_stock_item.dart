@@ -7,8 +7,8 @@ import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:pet_nature/widgets/produtos/product_item.dart';
 import 'package:pet_nature/widgets/produtos/produto_details_modal.dart';
 
-class ExpandItem extends ConsumerWidget {
-  const ExpandItem({required this.produtos, required this.title, super.key});
+class ExpandStockItem extends ConsumerWidget {
+  const ExpandStockItem({required this.produtos, required this.title, super.key});
 
   final String title;
   final List produtos;
@@ -52,6 +52,26 @@ class ExpandItem extends ConsumerWidget {
             child: Column(
               children: [
                 ProductItem(produto['name']),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          'Lote: ${produto['lote']}',
+                          style: LetterTheme.textSemibold,
+                        ),
+                      ),
+                      SizedBox(width: 40),
+                      FittedBox(
+                        child: Text(
+                          'Quantidade: ${produto['quantidade']}',
+                          style: LetterTheme.textSemibold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

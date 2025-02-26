@@ -5,6 +5,7 @@ import 'package:pet_nature/providers/produtos_provider.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/produtos/fetched_produtos.dart';
+import 'package:pet_nature/widgets/produtos_estoque/fetched_stock_products.dart';
 import 'package:pet_nature/widgets/ui/page_title.dart';
 
 class EstoqueScreen extends ConsumerWidget {
@@ -15,12 +16,12 @@ class EstoqueScreen extends ConsumerWidget {
     final data = ref.watch(ProdutosProvider);
 
     return data.when(
-      data: (produtos) {
+      data: (produtosstock) {
         return Column(
           children: [
             UiInstances.logoToMainContentSpacer,
             PageTitle('Estoque'),
-            FetchedProdutos(produtos),
+            FetchedStockProducts(produtosstock),
           ],
         );
       },

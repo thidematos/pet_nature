@@ -8,6 +8,7 @@ class ProductStockItem extends StatelessWidget {
   final int quantidade;
 
   const ProductStockItem({
+    super.key,
     required this.title,
     required this.lote,
     required this.quantidade,

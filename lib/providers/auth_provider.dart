@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
 
@@ -10,7 +11,6 @@ class userNotifier extends StateNotifier<Map> {
 
   String get role {
     final role = state['role'];
-
     return role;
   }
 
@@ -18,11 +18,17 @@ class userNotifier extends StateNotifier<Map> {
     final url = state['photo'];
     return url;
   }
-}
 
-final UserProvider = StateNotifierProvider<userNotifier, Map>(
-  (ref) => userNotifier(),
-);
+  Future<void> updatePhotoUrl(String url) async {
+    state = {...state, 'photo': url};
+    await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
+  }
+
+
+
+  final UserProvider = StateNotifierProvider<userNotifier, Map>(
+    (ref) => userNotifier(),
+  );
 
 final AuthProvider = FutureProvider((ref) async {
   final user = await FirebaseFirestoreApi.verifyUser();
@@ -31,3 +37,5 @@ final AuthProvider = FutureProvider((ref) async {
 
   return user;
 });
+
+}

@@ -14,10 +14,10 @@ class ProdutoDetailsStockModal extends StatefulWidget {
   final Map produto;
 
   @override
-  State<ProdutoDetailsStockModal> createState() => _ProdutoDetailsModalState();
+  State<ProdutoDetailsStockModal> createState() => _ProdutoDetailsStockModalState();
 }
 
-class _ProdutoDetailsModalState extends State<ProdutoDetailsStockModal> {
+class _ProdutoDetailsStockModalState extends State<ProdutoDetailsStockModal> {
   bool isLoading = false;
   Map? user;
 
@@ -72,6 +72,11 @@ class _ProdutoDetailsModalState extends State<ProdutoDetailsStockModal> {
               kProdutosCategories[widget.produto['category']]!,
             ),
             DetailRow('Marca:', widget.produto['brand']),
+            DetailRow('Lote:', widget.produto['lote']),
+            DetailRow(
+              'Quantidade em estoque:',
+              widget.produto['stock'].toString(),
+            ), 
             DetailRow(
               'Data de cadastro:',
               kFormatTimestamp(widget.produto['created_at']),
