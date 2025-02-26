@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/global_data.dart';
@@ -60,6 +61,10 @@ class _EditProdutoFormState extends ConsumerState<EditProdutoForm> {
       'brand': brandController.text,
       'category': selectedCategory,
       'description': descriptionController.text,
+      'last_edition': {
+        'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+        'user': FirebaseAuth.instance.currentUser!.uid,
+      },
     };
 
     setState(() {

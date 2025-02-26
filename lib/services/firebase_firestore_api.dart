@@ -96,4 +96,14 @@ class FirebaseFirestoreApi {
       return err;
     }
   }
+
+  static getEstoques() async {
+    try {
+      final estoques = await _instance.collection('estoques').get();
+
+      return estoques.docs.map((estoque) => estoque.data()).toList();
+    } on FirebaseException catch (err) {
+      return err;
+    }
+  }
 }

@@ -8,8 +8,12 @@ class Dropdown extends StatelessWidget {
     required this.items,
     required this.defaultValue,
     required this.onChange,
+    this.useArray = false,
+    this.itemsArr,
     super.key,
   });
+  final List? itemsArr;
+  final bool useArray;
   final String label;
   final Map<String, String> items;
   final String defaultValue;
@@ -32,14 +36,25 @@ class Dropdown extends StatelessWidget {
           style: LetterTheme.textSemibold.copyWith(fontSize: 16),
           value: defaultValue,
           items: [
-            for (final category in items.entries)
-              DropdownMenuItem(
-                value: category.key,
-                child: Text(
-                  category.value,
-                  style: LetterTheme.textSemibold.copyWith(fontSize: 16),
+            if (!useArray)
+              for (final category in items.entries)
+                DropdownMenuItem(
+                  value: category.key,
+                  child: Text(
+                    category.value,
+                    style: LetterTheme.textSemibold.copyWith(fontSize: 16),
+                  ),
                 ),
-              ),
+
+            if (useArray)
+              for (final data in itemsArr!)
+                DropdownMenuItem(
+                  value: data['uid'] as String,
+                  child: Text(
+                    data['name'],
+                    style: LetterTheme.textSemibold.copyWith(fontSize: 16),
+                  ),
+                ),
           ],
           onChanged: (value) => onChange(value!),
         ),
