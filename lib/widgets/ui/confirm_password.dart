@@ -40,14 +40,13 @@ class _ConfirmPasswordState extends ConsumerState<ConfirmPassword> {
         isLoading = false;
       });
       UiInstances.showSnackbar(context, 'Senha incorreta');
-      Navigator.of(context).pop();
       return;
     }
 
     setState(() {
       isLoading = false;
     });
-    Navigator.of(context).pop(true);
+    Navigator.of(context).pop(passwordController.text);
   }
 
   @override

@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_nature/widgets/ui/confirm_password.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
 import 'package:pet_nature/providers/auth_provider.dart';
 
@@ -45,18 +48,37 @@ class _UserInformationProfileState
       return;
     }
 
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => ConfirmPassword('Confirmar'),
+    );
+
+    if (result == null || result.isEmpty) {
+      return;
+    }
+
+        print('Senha retornada: $result');
+
     final userNotifier = ref.read(UserProvider.notifier);
 
-    await userNotifier.updateUserInfo({
-      'name': name,
-      'email': email,
-    });
+    try {
+      await userNotifier.updateUserInfo(context, {
+        'name': name,
+        'email': email,
+      });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Informações salvas com sucesso'),
-      ),
-    );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Informações salvas com sucesso'),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao salvar informações: $e'),
+        ),
+      );
+    }
   }
 
   @override
