@@ -21,14 +21,15 @@ class _UserAvatarProfileState extends ConsumerState<UserAvatarProfile> {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    
-
     if (pickedFile != null) {
       final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('user_avatars')
           .child('${user!.uid}.jpg');
+      ref.read(UserProvider.notifier).setLoading(true);
 
       await storageRef.putFile(File(pickedFile.path));
       final downloadUrl = await storageRef.getDownloadURL();
@@ -39,23 +40,52 @@ class _UserAvatarProfileState extends ConsumerState<UserAvatarProfile> {
           .update({'photoUrl': downloadUrl});
 
       ref.read(UserProvider.notifier).updatePhotoUrl(downloadUrl);
+      ref.read(UserProvider.notifier).setLoading(false);
     }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final url = ref.watch(UserProvider.notifier).photoUrl;
+  Widget build(BuildContext context) {
+    final url = ref.watch(UserProvider)['photo'];
+    final isLoading = ref.watch(UserProvider)['isLoading'] ?? false;
 
-    return Column(
+    if (isLoading) {
+      return Center(
+          child: CircularProgressIndicator(color: ColorTheme.secondaryTwo));
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CircleAvatar(
-          backgroundColor: ColorTheme.primary,
-          radius: 45,
-          foregroundImage: url != null ? NetworkImage(url) : null,
-        ),
-        TextButton(
-          onPressed: _pickAndUploadImage,
-          child: Text('Editar Imagem'),
+        Column(
+          children: [
+            Stack(
+              children: [
+                CircleAvatar(
+                  backgroundColor: ColorTheme.primary,
+                  radius: 50,
+                  foregroundImage: url != null ? NetworkImage(url) : null,
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: ColorTheme.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: _pickAndUploadImage,
+                      icon: Icon(Icons.edit_rounded,
+                          size: 15, color: ColorTheme.secondaryTwo),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );

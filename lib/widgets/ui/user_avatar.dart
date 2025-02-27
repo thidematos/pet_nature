@@ -8,14 +8,12 @@ class UserAvatar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final url = ref.read(UserProvider.notifier).photoUrl;
-
-    print(url);
+    final url = ref.watch(UserProvider)['photo'];
 
     return CircleAvatar(
       backgroundColor: ColorTheme.primary,
       radius: 25,
-      foregroundImage: NetworkImage(url),
+      foregroundImage: url != null ? NetworkImage(url) : null,
     );
   }
 }
