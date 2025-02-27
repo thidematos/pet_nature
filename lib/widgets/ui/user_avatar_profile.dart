@@ -28,17 +28,19 @@ class _UserAvatarProfileState extends ConsumerState<UserAvatarProfile> {
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('user_avatars')
-          .child('${user!.uid}.jpg');
+          .child('${user.uid}.jpg');
       ref.read(UserProvider.notifier).setLoading(true);
 
       await storageRef.putFile(File(pickedFile.path));
       final downloadUrl = await storageRef.getDownloadURL();
 
+      // Atualiza a URL da foto no Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
-          .update({'photoUrl': downloadUrl});
+          .update({'photo': downloadUrl});
 
+      // Atualiza a URL da foto no UserProvider
       ref.read(UserProvider.notifier).updatePhotoUrl(downloadUrl);
       ref.read(UserProvider.notifier).setLoading(false);
     }

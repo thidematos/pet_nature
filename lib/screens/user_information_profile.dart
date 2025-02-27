@@ -10,7 +10,8 @@ class UserInformationProfile extends ConsumerStatefulWidget {
   _UserInformationProfileState createState() => _UserInformationProfileState();
 }
 
-class _UserInformationProfileState extends ConsumerState<UserInformationProfile> {
+class _UserInformationProfileState
+    extends ConsumerState<UserInformationProfile> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _codeController;
@@ -31,13 +32,41 @@ class _UserInformationProfileState extends ConsumerState<UserInformationProfile>
     super.dispose();
   }
 
+  Future<void> _saveUserInfo() async {
+    final name = _nameController.text;
+    final email = _emailController.text;
+
+    if (name.isEmpty || email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Preencha todos os campos'),
+        ),
+      );
+      return;
+    }
+
+    final userNotifier = ref.read(UserProvider.notifier);
+
+    await userNotifier.updateUserInfo({
+      'name': name,
+      'email': email,
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Informações salvas com sucesso'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userAsyncValue = ref.watch(AuthProvider);
 
     return userAsyncValue.when(
       loading: () => Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Erro ao carregar dados do usuário')),
+      error: (err, stack) =>
+          Center(child: Text('Erro ao carregar dados do usuário')),
       data: (user) {
         final userData = ref.watch(UserProvider);
 
@@ -65,7 +94,11 @@ class _UserInformationProfileState extends ConsumerState<UserInformationProfile>
               label: 'Código',
               controller: _codeController,
               readOnly: true,
-              
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _saveUserInfo,
+              child: Text('Salvar'),
             ),
           ],
         );

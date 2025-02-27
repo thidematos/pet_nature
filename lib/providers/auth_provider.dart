@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
@@ -5,7 +6,7 @@ import 'package:pet_nature/services/firebase_firestore_api.dart';
 class userNotifier extends StateNotifier<Map> {
   userNotifier() : super({});
 
-  void setUser(user) {
+  void setUser(Map<String, dynamic> user) {
     state = user;
   }
 
@@ -22,6 +23,24 @@ class userNotifier extends StateNotifier<Map> {
   
   void setLoading(bool isLoading) {
     state = {...state, 'isLoading': isLoading};
+  }
+
+  Future<void> updateUserInfo(Map<String, String> userInfo) async {
+    setLoading(true);
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      if (userInfo.containsKey('name')) {
+        await user.updateDisplayName(userInfo['name']);
+      }
+      if (userInfo.containsKey('email')) {
+        await user.updateEmail(userInfo['email']!);
+      }
+
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set(userInfo, SetOptions(merge: true));
+    }
+
+    state = {...state, ...userInfo, 'isLoading': false};
   }
 
   Future<void> updatePhotoUrl(String url) async {

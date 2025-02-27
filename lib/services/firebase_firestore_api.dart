@@ -76,14 +76,13 @@ class FirebaseFirestoreApi {
     }
   }
 
-  static verifyUser() async {
-    final user =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get();
-
-    return user.data();
+  static Future<Map<String, dynamic>> verifyUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      return doc.data() ?? {};
+    }
+    return {};
   }
 
   static getProdutos() async {
