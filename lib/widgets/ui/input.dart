@@ -11,6 +11,7 @@ class Input extends StatelessWidget {
     this.useAutoCapitalization = false,
     this.keyToSave = '',
     this.onSave,
+    this.readOnly,
     this.controller,
     this.useObscure = false,
     this.minLines,
@@ -19,6 +20,7 @@ class Input extends StatelessWidget {
   });
 
   final int? minLines;
+  final bool? readOnly;
   final String placeholder;
   final String label;
   final bool useObscure;
@@ -47,6 +49,8 @@ class Input extends StatelessWidget {
           ),
           child: TextFormField(
             controller: controller,
+            keyboardType: keyboardType,
+            readOnly: readOnly ?? false,
             onSaved:
                 (value) => {if (onSave != null) onSave!(keyToSave, value!)},
             validator: (value) {
