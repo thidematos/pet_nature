@@ -15,14 +15,14 @@ class ExpandItem extends ConsumerWidget {
 
   void onClickDetails(BuildContext context, String role, curProduto) {
     print(role);
-    if (appRoles.leitor.name == role) {
+    if (kAppRoles.leitor.name == role) {
       showDialog(
         context: context,
         builder: (context) => ProdutoDetailsModal(curProduto),
       );
     }
 
-    if (appRoles.estoquista.name == role || appRoles.admin.name == role) {
+    if (kAppRoles.estoquista.name == role || kAppRoles.admin.name == role) {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => EditProdutoScreen(curProduto)),
       );

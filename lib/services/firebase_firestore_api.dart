@@ -106,4 +106,16 @@ class FirebaseFirestoreApi {
       return err;
     }
   }
+
+  static createEstoque(BuildContext context, estoqueData) async {
+    try {
+      await _instance
+          .collection('estoques')
+          .doc(estoqueData['uid'])
+          .set(estoqueData);
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, 'Algo deu errado');
+      return false;
+    }
+  }
 }

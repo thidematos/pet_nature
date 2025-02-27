@@ -61,7 +61,7 @@ class _NewProdutoFormState extends ConsumerState<NewProdutoForm> {
       return;
     }
 
-    final String now = DateTime.now().millisecondsSinceEpoch.toString();
+    final int now = DateTime.now().millisecondsSinceEpoch;
 
     final String uid = kUuid.v4();
 

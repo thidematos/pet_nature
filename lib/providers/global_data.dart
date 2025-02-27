@@ -11,12 +11,10 @@ final Map<String, String> kProdutosCategories = {
   'shampoo-cond': 'Shampoo e condicionadores',
 };
 
-enum appRoles { leitor, estoquista, admin }
+enum kAppRoles { leitor, estoquista, admin }
 
-String kFormatTimestamp(timestamp) {
-  final DateTime date = DateTime.fromMillisecondsSinceEpoch(
-    int.parse(timestamp),
-  );
+String kFormatTimestamp(int timestamp) {
+  final DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
 
   String toStringAndPadLeft(value) {
     return value.toString().padLeft(2, '0');

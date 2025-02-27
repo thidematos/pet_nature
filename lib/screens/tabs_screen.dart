@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/auth_provider.dart';
+import 'package:pet_nature/providers/tab_provider.dart';
 import 'package:pet_nature/screens/estoque_screen.dart';
 import 'package:pet_nature/screens/loading_screen.dart';
 import 'package:pet_nature/screens/perfil_screen.dart';
@@ -17,23 +18,17 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
-  int selectedPage = 1;
-
   final List<Widget> pages = [
     PerfilScreen(),
     ProdutosScreen(),
     EstoqueScreen(),
   ];
 
-  void selectTab(int page) {
-    setState(() {
-      selectedPage = page;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final actualContent = pages[selectedPage];
+    int currentTab = ref.watch(TabProvider);
+
+    final actualContent = pages[currentTab];
 
     final data = ref.watch(AuthProvider);
 
@@ -46,8 +41,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           bottomNavigationBar: SizedBox(
             height: 64,
             child: BottomNavigationBar(
-              currentIndex: selectedPage,
-              onTap: selectTab,
+              currentIndex: currentTab,
+              onTap: ref.read(TabProvider.notifier).changeActiveTab,
               iconSize: 25,
               backgroundColor: ColorTheme.secondaryTwo,
               selectedLabelStyle: LetterTheme.textSemibold,
@@ -56,13 +51,13 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    selectedPage == 0 ? Icons.person : Icons.person_outline,
+                    currentTab == 0 ? Icons.person : Icons.person_outline,
                   ),
                   label: 'PERFIL',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    selectedPage == 1
+                    currentTab == 1
                         ? Icons.local_offer
                         : Icons.local_offer_outlined,
                   ),
@@ -70,7 +65,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    selectedPage == 2
+                    currentTab == 2
                         ? Icons.inventory
                         : Icons.inventory_2_outlined,
                   ),

@@ -29,7 +29,7 @@ class _InputDateState extends State<InputDate> {
     if (pickedDate == null) return;
 
     setState(() {
-      date = kFormatTimestamp(pickedDate.millisecondsSinceEpoch.toString());
+      date = kFormatTimestamp(pickedDate.millisecondsSinceEpoch);
       widget.timestampSetter(pickedDate.millisecondsSinceEpoch);
     });
   }
