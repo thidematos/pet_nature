@@ -49,11 +49,14 @@ dependencies:
   mobile_scanner: ^6.0.6
 
 flutter_native_splash:
-  #color: "#42a5f5"
-  background_image: 'assets/icon.png'
+  color: '#DEEDC2'
+  #background_image: 'assets/icon.png'
+  image: assets/icon.png
+  branding: 'assets/logo-with-icon.png'
   android_12:
     image: assets/icon.png
     color: '#DEEDC2'
+    branding: 'assets/logo-with-icon.png'
   android: true
   ios: true
 
