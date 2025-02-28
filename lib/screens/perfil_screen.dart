@@ -10,16 +10,14 @@ class PerfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Expanded(
-        child: Column(
-          children: [
-            UiInstances.logoToMainContentSpacer,
-            PageTitle('Informações Pessoais'),
-            UserAvatarProfile(),
-            SizedBox(height: 20),
-            UserInformationProfile(),
-          ],
-        ),
+      child: Column(
+        children: [
+          UiInstances.logoToMainContentSpacer,
+          PageTitle('Informações Pessoais'),
+          UserAvatarProfile(),
+          SizedBox(height: 20),
+          UserInformationProfile(),
+        ],
       ),
     );
   }

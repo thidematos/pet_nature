@@ -35,38 +35,31 @@ class Input extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 8,
       children: [
         Text(
           label,
           style: LetterTheme.secondaryTitle,
           textAlign: TextAlign.start,
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: ColorTheme.light,
-            boxShadow: [UiInstances.shadow],
-          ),
-          child: TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
-            readOnly: readOnly ?? false,
-            onSaved:
-                (value) => {if (onSave != null) onSave!(keyToSave, value!)},
-            validator: (value) {
-              if (validator == null) return null;
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          readOnly: readOnly ?? false,
+          onSaved: (value) => {if (onSave != null) onSave!(keyToSave, value!)},
+          validator: (value) {
+            if (validator == null) return null;
 
-              return validator!(value);
-            },
-            textCapitalization:
-                useAutoCapitalization
-                    ? TextCapitalization.sentences
-                    : TextCapitalization.none,
-            obscureText: useObscure,
-            decoration: InputDecoration(
-              hintText: placeholder,
-              hintStyle: LetterTheme.placeholder,
-            ),
+            return validator!(value);
+          },
+          textCapitalization: useAutoCapitalization
+              ? TextCapitalization.sentences
+              : TextCapitalization.none,
+          obscureText: useObscure,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: readOnly == true ? Colors.grey[400] : ColorTheme.light,
+            hintText: placeholder,
+            hintStyle: LetterTheme.placeholder,
           ),
         ),
       ],

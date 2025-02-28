@@ -17,6 +17,11 @@ class userNotifier extends StateNotifier<Map> {
     return role;
   }
 
+  String get usertype {
+    final usertype = state['usertype'];
+    return usertype;
+  }
+
   String get photoUrl {
     final url = state['photo'];
     return url;
@@ -33,37 +38,12 @@ class userNotifier extends StateNotifier<Map> {
     if (user != null) {
       if (userInfo.containsKey('name')) {
         await user.updateDisplayName(userInfo['name']);
+        state = {...state, 'name': userInfo['name']};
       }
-      if (userInfo.containsKey('email')) {
-        final result = await showDialog(
-          context: context,
-          builder: (context) => ConfirmPassword('Confirmar'),
-        );
-
-        if (result != true) {
-          setLoading(false);
-          return;
-        }
-
-        final password = (result as String);
-        final credential = EmailAuthProvider.credential(
-          email: user.email!,
-          password: password,
-        );
-        try {
-          await user.reauthenticateWithCredential(credential);
-          await user.updateEmail(userInfo['email']!);
-        } catch (e) {
-          setLoading(false);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Erro ao atualizar email: $e'),
-            ),
-          );
-          return;
-        }
+      if (userInfo.containsKey('usertype')) {
+        await user.updateDisplayName(userInfo['usertype']);
+        state = {...state, 'usertype': userInfo['usertype']};
       }
-
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set(userInfo, SetOptions(merge: true));
     }
 
