@@ -38,6 +38,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       data: (data) {
         return Scaffold(
           appBar: UiInstances.appBar(
+            ref.read(TabProvider.notifier).goToProfile,
             useHistory: currentTab == 2 ? true : false,
             context: currentTab == 2 ? context : null,
           ),

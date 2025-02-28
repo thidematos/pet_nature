@@ -27,7 +27,11 @@ class UiInstances {
     bottom: 50,
   );
 
-  static AppBar appBar({bool useHistory = false, BuildContext? context}) {
+  static AppBar appBar(
+    Function() goToProfile, {
+    bool useHistory = false,
+    BuildContext? context,
+  }) {
     return AppBar(
       leading:
           useHistory && context != null
@@ -58,12 +62,7 @@ class UiInstances {
             border: Border.all(color: ColorTheme.primaryOne, width: 1),
             shape: BoxShape.circle,
           ),
-          child: InkWell(
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-            },
-            child: UserAvatar(),
-          ),
+          child: InkWell(onTap: goToProfile, child: UserAvatar()),
         ),
       ],
     );

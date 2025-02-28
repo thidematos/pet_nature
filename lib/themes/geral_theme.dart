@@ -4,6 +4,11 @@ import 'package:pet_nature/themes/letter_theme.dart';
 
 final ThemeData theme = ThemeData().copyWith(
   scaffoldBackgroundColor: ColorTheme.light,
+  textSelectionTheme: TextSelectionThemeData().copyWith(
+    cursorColor: ColorTheme.secondary,
+    selectionColor: ColorTheme.primaryTwo,
+    selectionHandleColor: ColorTheme.secondary,
+  ),
   inputDecorationTheme: InputDecorationTheme().copyWith(
     hintStyle: LetterTheme.placeholder,
     focusedBorder: OutlineInputBorder(

@@ -15,10 +15,12 @@ class Input extends StatelessWidget {
     this.useObscure = false,
     this.useNumberKeyboard = false,
     this.minLines,
+    this.readOnly,
 
     super.key,
   });
 
+  final bool? readOnly;
   final bool useNumberKeyboard;
   final int? minLines;
   final String placeholder;
@@ -48,6 +50,7 @@ class Input extends StatelessWidget {
           ),
           child: TextFormField(
             controller: controller,
+            readOnly: readOnly ?? false,
             keyboardType:
                 useNumberKeyboard ? TextInputType.number : TextInputType.text,
             onSaved:

@@ -103,7 +103,7 @@ class _EditProdutoFormState extends ConsumerState<EditProdutoForm> {
       builder: (context) => ConfirmPassword('Excluir'),
     );
 
-    if (result == null) {
+    if (result == null || !result) {
       return;
     }
 

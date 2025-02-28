@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/estoques_provider.dart';
 import 'package:pet_nature/providers/global_data.dart';
+import 'package:pet_nature/providers/tab_provider.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
@@ -108,7 +109,7 @@ class _NewEstoqueScreenState extends ConsumerState<NewEstoqueScreen> {
     }
 
     return Scaffold(
-      appBar: UiInstances.appBar(),
+      appBar: UiInstances.appBar(ref.read(TabProvider.notifier).goToProfile),
       body: Padding(
         padding: UiInstances.screenPaddingWithAppBar,
         child:

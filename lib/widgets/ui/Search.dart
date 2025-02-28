@@ -5,9 +5,11 @@ class Search extends StatelessWidget {
     required this.query,
     required this.onQuery,
     required this.placeholder,
+    this.useNumberKeyboard = false,
     super.key,
   });
 
+  final bool useNumberKeyboard;
   final Function(String value) onQuery;
   final String query;
   final String placeholder;
@@ -15,6 +17,8 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType:
+          useNumberKeyboard ? TextInputType.number : TextInputType.text,
       onChanged: (value) => onQuery(value),
       decoration: InputDecoration().copyWith(
         hintText: placeholder,

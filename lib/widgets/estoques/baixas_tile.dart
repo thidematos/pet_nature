@@ -104,7 +104,10 @@ class _BaixasTileState extends State<BaixasTile> {
                   Flexible(
                     child: Row(
                       spacing: 8,
-                      children: [Icon(Icons.person), Text(user!['code'])],
+                      children: [
+                        Icon(Icons.person),
+                        Text(user == null ? '' : user!['code']),
+                      ],
                     ),
                   ),
                   Flexible(

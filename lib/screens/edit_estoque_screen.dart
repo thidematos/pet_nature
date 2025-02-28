@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/providers/estoques_provider.dart';
 import 'package:pet_nature/providers/global_data.dart';
+import 'package:pet_nature/providers/tab_provider.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/estoques/input_date.dart';
@@ -38,7 +39,7 @@ class _EditEstoqueScreenState extends ConsumerState<EditEstoqueScreen> {
       builder: (context) => ConfirmPassword('Deletar estoque'),
     );
 
-    if (!isConfirmed) return;
+    if (isConfirmed == null || !isConfirmed) return;
 
     setState(() {
       isLoading = true;
@@ -109,7 +110,7 @@ class _EditEstoqueScreenState extends ConsumerState<EditEstoqueScreen> {
     String curDate = kFormatTimestamp(widget.estoque['expires_in']);
 
     return Scaffold(
-      appBar: UiInstances.appBar(),
+      appBar: UiInstances.appBar(ref.read(TabProvider.notifier).goToProfile),
       body: Padding(
         padding: UiInstances.screenPaddingWithAppBar,
         child: SingleChildScrollView(

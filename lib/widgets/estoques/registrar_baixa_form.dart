@@ -85,7 +85,7 @@ class _RegistrarBaixaFormState extends ConsumerState<RegistrarBaixaForm> {
       builder: (context) => ConfirmPassword('Registrar baixa'),
     );
 
-    if (!isConfirmed) return;
+    if (isConfirmed == null || !isConfirmed) return;
 
     setState(() {
       isLoading = true;

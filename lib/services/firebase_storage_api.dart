@@ -9,7 +9,7 @@ class FirebaseStorageApi {
     final storageRef = _instance
         .ref()
         .child('user_photo')
-        .child('${userUid}.jpg');
+        .child('$userUid.jpg');
 
     await storageRef.putFile(photo);
 

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:pet_nature/providers/tab_provider.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 
-class BarcodeScanner extends StatefulWidget {
+class BarcodeScanner extends ConsumerStatefulWidget {
   const BarcodeScanner({super.key});
 
   @override
-  State<BarcodeScanner> createState() => _BarcodeScannerState();
+  ConsumerState<BarcodeScanner> createState() => _BarcodeScannerState();
 }
 
-class _BarcodeScannerState extends State<BarcodeScanner> {
+class _BarcodeScannerState extends ConsumerState<BarcodeScanner> {
   MobileScannerController cameraController = MobileScannerController(
     formats: [BarcodeFormat.code128],
     detectionSpeed: DetectionSpeed.noDuplicates,
@@ -28,7 +30,7 @@ class _BarcodeScannerState extends State<BarcodeScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UiInstances.appBar(),
+      appBar: UiInstances.appBar(() {}),
       body: MobileScanner(
         controller: cameraController,
         onDetect: onDetectBarcode,
