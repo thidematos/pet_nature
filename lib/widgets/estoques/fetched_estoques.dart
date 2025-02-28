@@ -42,7 +42,7 @@ class FetchedEstoques extends ConsumerWidget {
               children: [
                 Flexible(
                   flex: 1,
-                  child: Button('Cadastrar no estoque', () {
+                  child: Button('Novo estoque', () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => NewEstoqueScreen(),
@@ -50,16 +50,17 @@ class FetchedEstoques extends ConsumerWidget {
                     );
                   }),
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Button('Registrar baixa', () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => RegistrarBaixaScreen(),
-                      ),
-                    );
-                  }),
-                ),
+                if (estoques.isNotEmpty)
+                  Flexible(
+                    flex: 1,
+                    child: Button('Registrar baixa', () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => RegistrarBaixaScreen(),
+                        ),
+                      );
+                    }, isDanger: true),
+                  ),
               ],
             ),
         ],

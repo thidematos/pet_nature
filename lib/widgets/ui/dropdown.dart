@@ -47,7 +47,7 @@ class Dropdown extends StatelessWidget {
                 ),
 
             if (useArray)
-              for (final data in itemsArr!)
+              for (final Map data in itemsArr!)
                 DropdownMenuItem(
                   value: data['uid'] as String,
                   child: Text(

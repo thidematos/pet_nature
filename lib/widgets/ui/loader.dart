@@ -4,16 +4,26 @@ import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/ui/page_title.dart';
 
 class Loader extends StatelessWidget {
-  const Loader({this.isPageLoader = false, super.key});
+  const Loader({
+    this.isPageLoader = false,
+    this.color,
+    this.size = 20,
+    super.key,
+  });
 
   final bool isPageLoader;
+  final Color? color;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     Widget content = SizedBox(
-      height: 20,
-      width: 20,
-      child: CircularProgressIndicator(color: ColorTheme.light, strokeWidth: 2),
+      height: size,
+      width: size,
+      child: CircularProgressIndicator(
+        color: color ?? ColorTheme.light,
+        strokeWidth: 2,
+      ),
     );
 
     if (isPageLoader) {

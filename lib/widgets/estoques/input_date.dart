@@ -5,9 +5,19 @@ import 'package:pet_nature/themes/letter_theme.dart';
 import 'package:pet_nature/themes/ui_instances.dart';
 
 class InputDate extends StatefulWidget {
-  const InputDate(this.timetamp, this.timestampSetter, {super.key});
+  const InputDate(
+    this.timetamp,
+    this.timestampSetter, {
+    this.useCurrentDate = '',
+    this.useBackwards = false,
+    this.label = 'Data de validade*',
+    super.key,
+  });
 
   final int? timetamp;
+  final String label;
+  final bool useBackwards;
+  final String useCurrentDate;
   final void Function(int timestamp) timestampSetter;
 
   @override
@@ -20,10 +30,16 @@ class _InputDateState extends State<InputDate> {
   void onChooseDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      firstDate: DateTime.now(),
+      firstDate:
+          widget.useBackwards
+              ? DateTime.now().subtract(Duration(days: 365))
+              : DateTime.now(),
       confirmText: 'Escolher',
       cancelText: 'Cancelar',
-      lastDate: DateTime.now().add(Duration(days: 2000)),
+      lastDate:
+          widget.useBackwards
+              ? DateTime.now()
+              : DateTime.now().add(Duration(days: 2000)),
     );
 
     if (pickedDate == null) return;
@@ -35,13 +51,19 @@ class _InputDateState extends State<InputDate> {
   }
 
   @override
+  void initState() {
+    date = widget.useCurrentDate.isNotEmpty ? widget.useCurrentDate : date;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
       children: [
         Text(
-          'Data de validade*',
+          widget.label,
           style: LetterTheme.secondaryTitle,
           textAlign: TextAlign.start,
         ),

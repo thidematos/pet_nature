@@ -7,6 +7,7 @@ import 'package:pet_nature/providers/global_data.dart';
 import 'package:pet_nature/providers/produtos_provider.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
 import 'package:pet_nature/services/firebase_storage_api.dart';
+import 'package:pet_nature/themes/ui_instances.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/confirm_password.dart';
 import 'package:pet_nature/widgets/ui/dropdown.dart';
@@ -109,6 +110,21 @@ class _EditProdutoFormState extends ConsumerState<EditProdutoForm> {
     setState(() {
       isLoading = true;
     });
+
+    final estoques = await FirebaseFirestoreApi.getEstoques();
+
+    final curEstoque =
+        estoques
+            .where((estoque) => estoque['produto'] == widget.produto['uid'])
+            .toList();
+
+    if (curEstoque != null) {
+      UiInstances.showSnackbar(context, 'Produto em estoque!');
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
 
     final bool isOkay = await FirebaseFirestoreApi.deleteProduto(
       context,

@@ -76,16 +76,6 @@ class FirebaseFirestoreApi {
     }
   }
 
-  static verifyUser() async {
-    final user =
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get();
-
-    return user.data();
-  }
-
   static getProdutos() async {
     try {
       final produtos = await _instance.collection('produtos').get();
@@ -95,6 +85,16 @@ class FirebaseFirestoreApi {
       //UiInstances.showSnackbar(context, err.message!);
       return err;
     }
+  }
+
+  static verifyUser() async {
+    final user =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+
+    return user.data();
   }
 
   static getEstoques() async {
@@ -113,6 +113,58 @@ class FirebaseFirestoreApi {
           .collection('estoques')
           .doc(estoqueData['uid'])
           .set(estoqueData);
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, 'Algo deu errado');
+      return false;
+    }
+  }
+
+  static updateEstoque(BuildContext context, updateData, estoqueUid) async {
+    try {
+      await _instance.collection('estoques').doc(estoqueUid).update(updateData);
+      return true;
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, 'Algo deu errado');
+      return false;
+    }
+  }
+
+  static deleteEstoque(BuildContext context, String estoqueUid) async {
+    try {
+      await _instance.collection('estoques').doc(estoqueUid).delete();
+      return true;
+    } on FirebaseException catch (err) {
+      UiInstances.showSnackbar(context, 'Algo deu errado');
+      return false;
+    }
+  }
+
+  static registerBaixa(String estoqueUid, int newQtd) async {
+    try {
+      await _instance.collection('estoques').doc(estoqueUid).update({
+        'qtd': newQtd,
+      });
+      return true;
+    } on FirebaseAuthException catch (err) {
+      return false;
+    }
+  }
+
+  static createBaixa(BuildContext context, baixaData) async {
+    try {
+      await _instance.collection('baixas').doc(baixaData['uid']).set(baixaData);
+      return true;
+    } on FirebaseAuthException catch (err) {
+      UiInstances.showSnackbar(context, 'Falha ao dar baixa!');
+      return false;
+    }
+  }
+
+  static getBaixas(BuildContext context) async {
+    try {
+      final baixas = await _instance.collection('baixas').get();
+
+      return baixas.docs.map((doc) => doc.data()).toList();
     } on FirebaseException catch (err) {
       UiInstances.showSnackbar(context, 'Algo deu errado');
       return false;

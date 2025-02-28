@@ -37,7 +37,10 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       error: (error, stackTrace) => Text('Algo deu errado!'),
       data: (data) {
         return Scaffold(
-          appBar: UiInstances.appBar,
+          appBar: UiInstances.appBar(
+            useHistory: currentTab == 2 ? true : false,
+            context: currentTab == 2 ? context : null,
+          ),
           bottomNavigationBar: SizedBox(
             height: 64,
             child: BottomNavigationBar(

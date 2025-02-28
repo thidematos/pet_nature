@@ -14,7 +14,7 @@ class _NewProdutoScreenState extends State<NewProdutoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UiInstances.appBar,
+      appBar: UiInstances.appBar(),
       body: Padding(
         padding: UiInstances.screenPaddingWithAppBar,
         child: SingleChildScrollView(

@@ -59,6 +59,10 @@ class _NewEstoqueScreenState extends ConsumerState<NewEstoqueScreen> {
 
     final estoqueData = {
       'produto': selectedProduto,
+      'name':
+          produtos
+              .where((produto) => produto['uid'] == selectedProduto)
+              .toList()[0]['name'],
       'lote': int.tryParse(loteController.text),
       'qtd': int.tryParse(qtdController.text),
       'expires_in': timestamp,
@@ -104,7 +108,7 @@ class _NewEstoqueScreenState extends ConsumerState<NewEstoqueScreen> {
     }
 
     return Scaffold(
-      appBar: UiInstances.appBar,
+      appBar: UiInstances.appBar(),
       body: Padding(
         padding: UiInstances.screenPaddingWithAppBar,
         child:
@@ -157,7 +161,7 @@ class _NewEstoqueScreenState extends ConsumerState<NewEstoqueScreen> {
                               flex: 1,
                               child: Input(
                                 placeholder: '32',
-                                label: 'Quantidade*',
+                                label: 'Qtd.*',
                                 controller: qtdController,
                                 useNumberKeyboard: true,
                                 validator: (value) {
@@ -174,7 +178,11 @@ class _NewEstoqueScreenState extends ConsumerState<NewEstoqueScreen> {
                             ),
                             Flexible(
                               flex: 2,
-                              child: InputDate(timestamp, onSelectTimestamp),
+                              child: InputDate(
+                                timestamp,
+                                onSelectTimestamp,
+                                useCurrentDate: '',
+                              ),
                             ),
                           ],
                         ),

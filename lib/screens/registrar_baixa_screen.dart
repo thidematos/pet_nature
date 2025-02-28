@@ -9,7 +9,7 @@ class RegistrarBaixaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UiInstances.appBar,
+      appBar: UiInstances.appBar(),
       body: Padding(
         padding: UiInstances.screenPaddingWithAppBar,
         child: SingleChildScrollView(
@@ -17,7 +17,7 @@ class RegistrarBaixaScreen extends StatelessWidget {
             children: [
               UiInstances.logoToMainContentSpacer,
               PageTitle('Registrar baixa no estoque'),
-              Expanded(child: RegistrarBaixaForm()),
+              RegistrarBaixaForm(),
             ],
           ),
         ),
