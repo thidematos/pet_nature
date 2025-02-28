@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_nature/services/firebase_firestore_api.dart';
-import 'package:pet_nature/widgets/ui/confirm_password.dart';
 
 class userNotifier extends StateNotifier<Map> {
   userNotifier() : super({});
@@ -15,11 +14,6 @@ class userNotifier extends StateNotifier<Map> {
   String get role {
     final role = state['role'];
     return role;
-  }
-
-  String get usertype {
-    final usertype = state['usertype'];
-    return usertype;
   }
 
   String get photoUrl {
@@ -40,9 +34,9 @@ class userNotifier extends StateNotifier<Map> {
         await user.updateDisplayName(userInfo['name']);
         state = {...state, 'name': userInfo['name']};
       }
-      if (userInfo.containsKey('usertype')) {
-        await user.updateDisplayName(userInfo['usertype']);
-        state = {...state, 'usertype': userInfo['usertype']};
+      if (userInfo.containsKey('role')) {
+        await user.updateDisplayName(userInfo['role']);
+        state = {...state, 'role': userInfo['role']};
       }
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set(userInfo, SetOptions(merge: true));
     }

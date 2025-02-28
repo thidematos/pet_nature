@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/geral_theme.dart';
+import 'package:pet_nature/widgets/produtos/detail_row.dart';
 import 'package:pet_nature/widgets/ui/button.dart';
 import 'package:pet_nature/widgets/ui/confirm_password.dart';
+import 'package:pet_nature/widgets/ui/detail_row_profile.dart';
 import 'package:pet_nature/widgets/ui/input.dart';
 import 'package:pet_nature/providers/auth_provider.dart';
 
@@ -21,8 +23,9 @@ class _UserInformationProfileState
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _codeController;
-  late TextEditingController _usertypecontroller;
+  late TextEditingController _rolecontroller;
   final loadingProvider = StateProvider<bool>((ref) => false);
+  final roleProvider = StateProvider<String>((ref) => '');
 
   User? user;
 
@@ -32,7 +35,7 @@ class _UserInformationProfileState
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _codeController = TextEditingController();
-    _usertypecontroller = TextEditingController();
+    _rolecontroller = TextEditingController();
 
     user = FirebaseAuth.instance.currentUser;
 
@@ -42,7 +45,8 @@ class _UserInformationProfileState
       _nameController.text = userData['name'] ?? '';
       _emailController.text = userData['email'] ?? '';
       _codeController.text = userData['code'] ?? '';
-      _usertypecontroller.text = userData['usertype'] ?? '';
+      _rolecontroller.text = userData['role'] ?? '';
+      ref.read(roleProvider.notifier).state = userData['role'] ?? '';
     });
   }
 
@@ -51,6 +55,7 @@ class _UserInformationProfileState
     _nameController.dispose();
     _emailController.dispose();
     _codeController.dispose();
+    _rolecontroller.dispose();
     super.dispose();
   }
 
@@ -105,37 +110,39 @@ class _UserInformationProfileState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao salvar informações: ${e.toString()}')),
       );
-    }finally {
+    } finally {
       ref.read(loadingProvider.notifier).state = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final role = ref.watch(roleProvider);
     final isLoading = ref.watch(loadingProvider);
     return Column(
       children: [
+        DetailRowProfile('Tipo de usuário:', role),
+        SizedBox(height: 16),
         Input(
           placeholder: 'Digite seu nome',
           label: 'Nome',
           controller: _nameController,
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 16),
         Input(
           placeholder: 'Seu email é...',
           label: 'Email',
           controller: _emailController,
           readOnly: true,
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 16),
         Input(
           placeholder: 'Seu código é...',
           label: 'Código',
           controller: _codeController,
           readOnly: true,
-  
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 16),
         Button(
           'Salvar',
           _saveUserInfo,
