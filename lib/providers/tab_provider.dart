@@ -10,6 +10,10 @@ class TabProviderNotifier extends StateNotifier<int> {
   void goToProfile() {
     state = 0;
   }
+
+  void reset() {
+    state = 1;
+  }
 }
 
 final TabProvider = StateNotifierProvider<TabProviderNotifier, int>(

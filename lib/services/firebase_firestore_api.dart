@@ -87,17 +87,15 @@ class FirebaseFirestoreApi {
     }
   }
 
-  static Future<Map<String, dynamic>> verifyUser() async {
+  static Future verifyUser() async {
     final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final doc =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .get();
-      return doc.data() ?? {};
-    }
-    return {};
+
+    final doc =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .get();
+    return doc.data();
   }
 
   static getEstoques() async {

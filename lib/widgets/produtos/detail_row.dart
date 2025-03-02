@@ -12,6 +12,7 @@ class DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       spacing: 8,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
@@ -19,7 +20,14 @@ class DetailRow extends StatelessWidget {
             color: ColorTheme.secondaryTwo,
           ),
         ),
-        Text(content, style: LetterTheme.textSemibold),
+        Expanded(
+          child: Text(
+            content,
+            style: LetterTheme.textSemibold,
+            softWrap: true,
+            maxLines: 3,
+          ),
+        ),
       ],
     );
   }

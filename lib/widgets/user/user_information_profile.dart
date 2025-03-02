@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pet_nature/providers/tab_provider.dart';
 import 'package:pet_nature/themes/color_theme.dart';
 import 'package:pet_nature/themes/geral_theme.dart';
 import 'package:pet_nature/widgets/produtos/detail_row.dart';
@@ -146,7 +147,11 @@ class _UserInformationProfileState
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
-                onPressed: FirebaseAuth.instance.signOut,
+                onPressed: () async {
+                  ref.read(TabProvider.notifier).reset();
+                  ref.read(UserProvider.notifier).reset();
+                  await FirebaseAuth.instance.signOut();
+                },
                 child: Text(
                   'Sair',
                   style: TextStyle(color: ColorTheme.secondaryTwo),

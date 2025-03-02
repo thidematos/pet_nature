@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_nature/desloga.dart';
 import 'package:pet_nature/screens/loading_screen.dart';
 import 'package:pet_nature/screens/produtos_screen.dart';
 import 'package:pet_nature/screens/start_screen.dart';
@@ -17,11 +18,12 @@ void main() async {
   runApp(ProviderScope(child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    //return Desloga();
     return MaterialApp(
       title: 'Pet Nature',
       theme: theme,

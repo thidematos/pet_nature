@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_nature/providers/auth_provider.dart';
 import 'package:pet_nature/providers/signup_provider.dart';
 import 'package:pet_nature/screens/login_screen.dart';
 import 'package:pet_nature/services/firebase_auth_api.dart';
@@ -106,6 +107,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     });
 
     toggleLoader(state: false);
+
+    print('TERMINEI DE ENVIAR TUDO!!!!');
 
     ref.read(SignupProvider.notifier).reset();
 

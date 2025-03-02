@@ -56,16 +56,12 @@ class userNotifier extends StateNotifier<Map> {
     await FirebaseAuth.instance.currentUser?.updatePhotoURL(url);
     state = {...state, 'photo': url, 'isLoading': false};
   }
+
+  void reset() {
+    state = {};
+  }
 }
 
 final UserProvider = StateNotifierProvider<userNotifier, Map>(
   (ref) => userNotifier(),
 );
-
-final AuthProvider = FutureProvider((ref) async {
-  final user = await FirebaseFirestoreApi.verifyUser();
-
-  ref.read(UserProvider.notifier).setUser(user);
-
-  return user;
-});
