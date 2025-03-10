@@ -111,14 +111,14 @@ class _EditProdutoFormState extends ConsumerState<EditProdutoForm> {
       isLoading = true;
     });
 
-    final estoques = await FirebaseFirestoreApi.getEstoques();
+    final List estoques = await FirebaseFirestoreApi.getEstoques();
 
     final curEstoque =
         estoques
             .where((estoque) => estoque['produto'] == widget.produto['uid'])
             .toList();
 
-    if (curEstoque != null) {
+    if (curEstoque.isNotEmpty) {
       UiInstances.showSnackbar(context, 'Produto em estoque!');
       setState(() {
         isLoading = false;

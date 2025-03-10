@@ -41,9 +41,15 @@ class _EstoqueScreenState extends ConsumerState<EstoqueScreen> {
               final cleanProductLote = removeDiacritics(
                 estoque['lote'].toString().toLowerCase(),
               );
+              final cleanProductName = removeDiacritics(
+                estoque['name'].toString().toLowerCase(),
+              );
               final cleandQuery = removeDiacritics(query.toLowerCase());
 
-              return cleanProductLote.startsWith(cleandQuery) ? true : false;
+              return cleanProductLote.startsWith(cleandQuery) ||
+                      cleanProductName.startsWith(cleandQuery)
+                  ? true
+                  : false;
             }).toList();
 
         return Column(
@@ -52,10 +58,10 @@ class _EstoqueScreenState extends ConsumerState<EstoqueScreen> {
             UiInstances.logoToMainContentSpacer,
             PageTitle('Estoques'),
             Search(
-              useNumberKeyboard: true,
+              useNumberKeyboard: false,
               query: query,
               onQuery: onQuery,
-              placeholder: 'Pesquise o lote do produto desejado',
+              placeholder: 'Pesquise o produto ou o lote desejado',
             ),
             SizedBox(height: 20),
             FetchedEstoques(filteredEstoques),
