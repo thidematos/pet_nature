@@ -98,12 +98,12 @@ class _EditProdutoFormState extends ConsumerState<EditProdutoForm> {
   }
 
   void deleteProduto() async {
-    final result = await showDialog(
+    final String? result = await showDialog(
       context: context,
       builder: (context) => ConfirmPassword('Excluir'),
     );
 
-    if (result == null || !result) {
+    if (result == null) {
       return;
     }
 

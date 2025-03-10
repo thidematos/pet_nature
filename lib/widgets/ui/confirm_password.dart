@@ -47,7 +47,7 @@ class _ConfirmPasswordState extends ConsumerState<ConfirmPassword> {
     setState(() {
       isLoading = false;
     });
-    Navigator.of(context).pop(true);
+    Navigator.of(context).pop(passwordController.text);
   }
 
   @override

@@ -62,7 +62,7 @@ class _BaixasTileState extends State<BaixasTile> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
-                      spacing: 8,
+                      spacing: 4,
                       children: [
                         Text(
                           'Lote:',
@@ -72,7 +72,7 @@ class _BaixasTileState extends State<BaixasTile> {
                         ),
                         Text(
                           curEstoque['lote'].toString(),
-                          style: LetterTheme.text.copyWith(fontSize: 16),
+                          style: LetterTheme.text.copyWith(fontSize: 14),
                         ),
                       ],
                     ),

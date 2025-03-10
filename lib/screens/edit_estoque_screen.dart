@@ -34,12 +34,12 @@ class _EditEstoqueScreenState extends ConsumerState<EditEstoqueScreen> {
   }
 
   void deleteEstoque() async {
-    final isConfirmed = await showDialog(
+    final String? isConfirmed = await showDialog(
       context: context,
       builder: (context) => ConfirmPassword('Deletar estoque'),
     );
 
-    if (isConfirmed == null || !isConfirmed) return;
+    if (isConfirmed == null) return;
 
     setState(() {
       isLoading = true;

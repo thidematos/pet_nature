@@ -57,6 +57,7 @@ class _EstoqueScreenState extends ConsumerState<EstoqueScreen> {
               onQuery: onQuery,
               placeholder: 'Pesquise o lote do produto desejado',
             ),
+            SizedBox(height: 20),
             FetchedEstoques(filteredEstoques),
           ],
         );

@@ -61,8 +61,8 @@ class _UserInformationProfileState
   }
 
   Future<void> _saveUserInfo() async {
-    final name = _nameController.text.trim();
-    final email = _emailController.text.trim();
+    final String name = _nameController.text.trim();
+    final String email = _emailController.text.trim();
 
     if (name.isEmpty || email.isEmpty) {
       ScaffoldMessenger.of(
@@ -71,12 +71,12 @@ class _UserInformationProfileState
       return;
     }
 
-    final result = await showDialog(
+    final String? result = await showDialog(
       context: context,
       builder: (context) => ConfirmPassword('Confirmar'),
     );
 
-    if (result == null || !result) {
+    if (result == null) {
       return;
     }
 
@@ -107,6 +107,7 @@ class _UserInformationProfileState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao salvar informações: ${e.toString()}')),
       );
+      print(e);
     } finally {
       ref.read(loadingProvider.notifier).state = false;
     }

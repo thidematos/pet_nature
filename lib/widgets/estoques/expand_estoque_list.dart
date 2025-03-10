@@ -35,15 +35,20 @@ class ExpandEstoqueList extends ConsumerWidget {
               return curEstoqueWithProduto;
             }).toList();
 
-        return Column(
-          children: [
-            for (final category in kProdutosCategories.keys)
-              if (getProdutosEstocados(populatedEstoques, category).isNotEmpty)
-                ExpandEstoqueItem(
-                  estoques: getProdutosEstocados(populatedEstoques, category),
-                  title: kProdutosCategories[category]!,
-                ),
-          ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              for (final category in kProdutosCategories.keys)
+                if (getProdutosEstocados(
+                  populatedEstoques,
+                  category,
+                ).isNotEmpty)
+                  ExpandEstoqueItem(
+                    estoques: getProdutosEstocados(populatedEstoques, category),
+                    title: kProdutosCategories[category]!,
+                  ),
+            ],
+          ),
         );
       },
       error: (error, stackTrace) {

@@ -80,12 +80,12 @@ class _RegistrarBaixaFormState extends ConsumerState<RegistrarBaixaForm> {
       return;
     }
 
-    final isConfirmed = await showDialog(
+    final String? isConfirmed = await showDialog(
       context: context,
       builder: (context) => ConfirmPassword('Registrar baixa'),
     );
 
-    if (isConfirmed == null || !isConfirmed) return;
+    if (isConfirmed == null) return;
 
     setState(() {
       isLoading = true;
